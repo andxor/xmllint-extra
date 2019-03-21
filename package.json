@@ -1,14 +1,11 @@
 {
-  "name": "xmllint-names",
+  "name": "xmllint-extra",
   "version": "0.0.1",
-  "description": "Decorate xmllint error messages with tag names",
+  "description": "Decorate xmllint error messages with extra information (tag name and offset)",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andxor/xmllint-names.git"
+    "url": "git+https://github.com/andxor/xmllint-extra.git"
   },
   "keywords": [
     "xmllint",
@@ -20,12 +17,15 @@
   "author": "Lapo Luchini <l.luchini@andxor.it>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/andxor/xmllint-names/issues"
+    "url": "https://github.com/andxor/xmllint-extra/issues"
   },
-  "homepage": "https://github.com/andxor/xmllint-names#readme",
+  "homepage": "https://github.com/andxor/xmllint-extra#readme",
   "dependencies": {
     "xmllint": "^0.1.1"
   },
+  "files": [
+    "index.js"
+  ],
   "eslintConfig": {
     "env": {
       "node": true,

@@ -18,10 +18,10 @@ function oneTagPerLine(xml) {
 function validateXML(opts) {
     const opt2 = Object.assign({}, opts);
     opt2.xml = oneTagPerLine(opt2.xml);
-    const err = lint.validateXML(opt2);
-    if (err.errors) {
+    const out = lint.validateXML(opt2);
+    if (out.errors) {
         const lines = opt2.xml.split(reLine);
-        err.errors = err.errors.map(s => {
+        out.errors = out.errors.map(s => {
             try {
                 const
                     msg = reErr.exec(s),
@@ -40,7 +40,7 @@ function validateXML(opts) {
             }
         });
     }
-    return err;
+    return out;
 }
 
 module.exports = { validateXML };
