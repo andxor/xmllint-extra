@@ -1,5 +1,5 @@
 /*!
- * node xmllint-names
+ * node xmllint-extra
  * (c) 2019 Lapo Luchini <l.luchini@andxor.it>
  */
 'use strict';
@@ -9,7 +9,7 @@ const
     reTag = /<[^/?]/g,
     reLine = /\r?\n/g,
     reErr = /^file_0.xml:([0-9]+): element ([^:]+): Schemas validity error : /,
-    reOff = /^(<!--offset:([0-9]+)-->)<([^>]+)>/;
+    reOff = /^<!--offset:([0-9]+)-->/;
 
 function oneTagPerLine(xml) {
     return xml.replace(reTag, (match, offset) => '\n<!--offset:' + offset + '-->' + match);
@@ -26,14 +26,12 @@ function validateXML(opts) {
                 const
                     msg = reErr.exec(s),
                     line = lines[msg[1] - 1],
-                    offset = reOff.exec(line),
-                    element1 = msg[2],
-                    element2 = offset[3];
+                    offset = reOff.exec(line);
                 return {
                     message: s.slice(msg[0].length),
-                    offset: +offset[2],
-                    element: (element1 != element2) ? '?' : element1,
-                    context: line.slice(offset[1].length)
+                    offset: +offset[1],
+                    element: msg[2],
+                    context: line.slice(offset[0].length)
                 }
             } catch (e) {
                 return { message: s };
