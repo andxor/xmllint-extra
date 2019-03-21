@@ -6,6 +6,8 @@
 
 const
     lint = require('xmllint'),
+    reLoc1 = /targetNamespace="([^"]+)"/,
+    reLoc2 = /(\bimport\s+namespace="([^"]+)"\s+schemaLocation=")[^"]+/g,
     reTag = /<[^/?]/g,
     reLine = /\r?\n/g,
     reErr = /^file_0.xml:([0-9]+): element ([^:]+): Schemas validity error : /,
@@ -16,8 +18,27 @@ function oneTagPerLine(xml) {
 }
 
 function validateXML(opts) {
+    if (typeof opts.xml != 'string')
+        throw new Error('Option "xml" should be a string.');
+    if (typeof opts.schema != 'object' || !Array.isArray(opts.schema))
+        throw new Error('Option "schema" should be an array of strings.');
     const opt2 = Object.assign({}, opts);
     opt2.xml = oneTagPerLine(opt2.xml);
+    opt2.schema = [];
+    const loc = {};
+    opts.schema.forEach(s => {
+        // detect namespace defined by this schema
+        const ns = reLoc1.exec(s);
+        if (ns)
+            loc[ns[1]] = 'file_' + opt2.schema.length + '.xsd';
+        // redirect imports of a known schema to the right file
+        s = s.replace(reLoc2, (all, base, ns) => {
+            const file = loc[ns];
+            if (!file) return;
+            return base + file;
+        });
+        opt2.schema.push(s);
+    });
     const out = lint.validateXML(opt2);
     if (out.errors) {
         const lines = opt2.xml.split(reLine);

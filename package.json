@@ -1,6 +1,6 @@
 {
   "name": "xmllint-extra",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Decorate xmllint error messages with extra information (tag name and offset)",
   "main": "index.js",
   "repository": {

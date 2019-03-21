@@ -3,6 +3,8 @@ xmllint-extra
 
 Decorate xmllint error messages with extra information (tag name and offset).
 
+This wrapper also adds some heuristics to fix imports between the passed schemas, by recognizing their defined namespace.
+
 example
 -------
 
