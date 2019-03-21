@@ -25,5 +25,23 @@
   "homepage": "https://github.com/andxor/xmllint-names#readme",
   "dependencies": {
     "xmllint": "^0.1.1"
-  }
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "es6": true
+    },
+    "globals": {
+      "define": true,
+      "module": true,
+      "ActiveXObject": true
+    },
+    "extends": [
+      "eslint:recommended"
+    ],
+    "rules": {}
+  },
+  "eslintIgnore": [
+    "node_modules/*"
+  ]
 }
